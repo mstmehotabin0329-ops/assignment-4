@@ -18,14 +18,60 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
         integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-        
+
     <title>PH Job Tracker</title>
 
 </head>
 
-<body>
+<body class="bg-base-200 pb-10 pt-10">
+    <header class="w-[80%] mx-auto">
+        <h1 class="text-4xl text-[#002C5C] font-bold">Job Application Tracker</h1>
+        <div class="header-card grid grid-cols-1 sm:grid-cols-3 gap-5 mt-5">
+            <div class="p-5 bg-base-100 shadow rounded-xl">
+                <p>Total</p>
+                <p id="total" class="font-bold text-xl">0</p>
+            </div>
+            <div class="p-5 bg-base-100 shadow rounded-xl">
+                <p>Interview</p>
+                <p id="interview" class="font-bold text-xl text-green-500">0</p>
+            </div>
+            <div class="p-5 bg-base-100 shadow rounded-xl">
+                <p>Rejected</p>
+                <p id="rejected" class="font-bold text-xl text-red-500">0</p>
+            </div>
+        </div>
+        <hr class="my-10 text border-base-300 border-1">
+    </header>
 
+    <main class="w-[80%] mx-auto">
+
+        <!-- Available Jos section -->
+        <section class="grid grid-cols-2 mb-10">
+            <div class="">
+                <h2 class="text-2xl font-semibold text-[#002C5C]">Available Jobs</h2>
+            </div>
+            <div class="text-right text-[#64748B]">
+                <span id="availableCount" class="count">8</span>
+                <span>jobs</span>
+            </div>
+        </section>
+
+        <!-- main button -->
+        <div class="flex gap-4">
+            <button onclick="toggleStyle()" id="all-filter-btn"
+                class="btn btn-info px-8 text-white">All</button>
+            <button onclick="toggleStyle()" id="interview-filter-btn"
+                class="btn text-[#444a52]">Inverview</button>
+            <button onclick="toggleStyle()" id="rejected-filter-btn"
+                class="btn text-[#444a52]">Rejected</button>
+        </div>
+
+        <div class="allCards" id="allCards">
+            
+        </div>
+    </main>
     <script src="js/script.js"></script>
 </body>
+
 
 </html>

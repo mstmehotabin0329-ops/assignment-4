@@ -97,3 +97,6 @@ let cards = [
     },
 
 ];
+
+let interviewList = [];
+let rejectedList = [];

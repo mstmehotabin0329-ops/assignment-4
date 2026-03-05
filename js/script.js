@@ -154,9 +154,75 @@ function getAllData() {
         allCards.appendChild(div);
     }
     calculateCount();
-    
+
 }
 
 
 
 
+function getInterviewData() {
+    allCards.innerHTML = '';
+    availableCount.innerText = interviewList.length;
+    for (let jobCard of interviewList) {
+        let div = document.createElement('div');
+        div.className = 'bg-base-100 shadow rounded-xl p-6 flex justify-between mb-5 mt-8'
+        div.innerHTML = `
+        <div class="space-y-6">
+            <div class="space-y-2">
+                <p class="companyName text-2xl font-semibold text-[#002C5C]">${jobCard.company}</p>
+                <p class="position text-[#64748B]">${jobCard.position}</p>
+            </div>
+            <p class="salary text-[#64748B]"><span>${jobCard.jobCategory}</span> • <span>${jobCard.workLocation}</span> • <span>${jobCard.minSalary}</span> - <span>${jobCard.maxSalary}</span></p>
+            <div class="space-y-2">
+                <p class="type bg-gray-200 inline-block py-2 px-4 font-semibold rounded-md">${jobCard.status}</p>
+                <p class="notes text-[#64748B]">${jobCard.description}</p>
+            </div>
+            <div class="flex gap-3">
+                <button class="inverviw-btn btn btn-outline btn-success">INTERVIEW</button>
+                <button class="rejected-btn btn btn-outline btn-error">REJECTED</button>
+            </div>
+        </div>
+        <div onclick="removeData('${jobCard.id}')" class="mt-5 mr-5">
+            <span class="deleted cursor-pointer text-[#64748B] hover:bg-red-200 border border-gray-300 rounded-full p-2"><i
+                    class="fa-regular fa-trash-can"></i></span>
+        </div>
+        `
+        allCards.appendChild(div);
+    }
+    calculateCount();
+}
+
+
+function getRejectedData() {
+    allCards.innerHTML = '';
+    availableCount.innerText = rejectedList.length;
+    for (let jobCard of rejectedList) {
+        let div = document.createElement('div');
+        div.className = 'bg-base-100 shadow rounded-xl p-6 flex justify-between mb-5 mt-8'
+        div.innerHTML = `
+        <div class="space-y-6">
+            <div class="space-y-2">
+                <p class="companyName text-2xl font-semibold text-[#002C5C]">${jobCard.company}</p>
+                <p class="position text-[#64748B]">${jobCard.position}</p>
+            </div>
+            <p class="salary text-[#64748B]"><span>${jobCard.jobCategory}</span> • <span>${jobCard.workLocation}</span> • <span>${jobCard.minSalary}</span> - <span>${jobCard.maxSalary}</span></p>
+            <div class="space-y-2">
+                <p class="type bg-gray-200 inline-block py-2 px-4 font-semibold rounded-md">${jobCard.status}</p>
+                <p class="notes text-[#64748B]">${jobCard.description}</p>
+            </div>
+            <div class="flex gap-3">
+                <button class="inverviw-btn btn btn-outline btn-success">INTERVIEW</button>
+                <button class="rejected-btn btn btn-outline btn-error">REJECTED</button>
+            </div>
+        </div>
+        <div onclick="removeData('${jobCard.id}')" class="mt-5 mr-5">
+            <span class="deleted cursor-pointer text-[#64748B] hover:bg-red-200 border border-gray-300 rounded-full p-2"><i
+                    class="fa-regular fa-trash-can"></i></span>
+        </div>
+        `
+        allCards.appendChild(div);
+    }
+    calculateCount();
+}
+
+// getAllData();

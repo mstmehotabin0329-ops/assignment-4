@@ -123,7 +123,7 @@ function calculateCount() {
 
 
 
-//  
+  
 function renderAllData() {
     allCards.innerHTML = '';
 
@@ -175,6 +175,150 @@ function renderAllData() {
     availableCount.innerText = cards.length;
 
 }
+
+
+
+function callInterviewing(idx) {
+    const filtered = cards.filter(item => item.id === idx);
+    const rejectedFilter = rejectedList.filter(item => item.id !== idx);
+
+    const search = cards.find(item => item.id === idx);
+    if (search) {
+        search.status = "Interview";
+        renderAllData();
+        
+    }
+    if (rejectedFilter) {
+        rejectedList = rejectedFilter;
+
+    }
+
+    let changeStatus = interviewList.some(item => item.id == idx);
+    if (changeStatus === false) {
+        interviewList.push(...filtered);
+    }
+    calculateCount();
+    renderAllData();
+    
+}
+
+function callInterviewingForInterviewState(idx) {
+    const filtered = cards.filter(item => item.id === idx);
+    const rejectedFilter = rejectedList.filter(item => item.id !== idx);
+
+    const search = cards.find(item => item.id === idx);
+    if (search) {
+        search.status = "Interview";
+        renderInterviewData();
+    }
+    if (rejectedFilter) {
+        rejectedList = rejectedFilter;
+
+    }
+
+    let changeStatus = interviewList.some(item => item.id == idx);
+    if (changeStatus === false) {
+        interviewList.push(...filtered);
+    }
+    calculateCount();
+    renderInterviewData();
+}
+
+function callInterviewingForRejectedState(idx) {
+    const filtered = cards.filter(item => item.id === idx);
+    const rejectedFilter = rejectedList.filter(item => item.id !== idx);
+
+    const search = cards.find(item => item.id === idx);
+    if (search) {
+        search.status = "Interview";
+        renderRejectedData();
+    }
+    if (rejectedFilter) {
+        rejectedList = rejectedFilter;
+
+    }
+
+    let changeStatus = interviewList.some(item => item.id == idx);
+    if (changeStatus === false) {
+        interviewList.push(...filtered);
+    }
+    calculateCount();
+    renderRejectedData();
+}
+
+function callRejected(idx) {
+    const filtered = cards.filter(item => item.id === idx);
+    const interviewFilter = interviewList.filter(item => item.id !== idx);
+
+    const search = cards.find(item => item.id === idx);
+    if (search) {
+        search.status = "Rejected";
+        renderAllData();
+    }
+
+    if (interviewFilter) {
+        interviewList = interviewFilter;
+
+    }
+
+
+    let changeStatus = rejectedList.some(item => item.id == idx);
+    if (changeStatus === false) {
+        rejectedList.push(...filtered);
+    }
+    calculateCount();
+
+}
+
+function callRejectedForInterviewState(idx) {
+    const filtered = cards.filter(item => item.id === idx);
+    const interviewFilter = interviewList.filter(item => item.id !== idx);
+
+    const search = cards.find(item => item.id === idx);
+    if (search) {
+        search.status = "Rejected";
+        renderInterviewData();
+    }
+
+    if (interviewFilter) {
+        interviewList = interviewFilter;
+
+    }
+
+
+    let changeStatus = rejectedList.some(item => item.id == idx);
+    if (changeStatus === false) {
+        rejectedList.push(...filtered);
+    }
+    calculateCount();
+    renderInterviewData();
+
+}
+
+function callRejectedForRejectedState(idx) {
+    const filtered = cards.filter(item => item.id === idx);
+    const interviewFilter = interviewList.filter(item => item.id !== idx);
+
+    const search = cards.find(item => item.id === idx);
+    if (search) {
+        search.status = "Rejected";
+        renderRejectedData();
+    }
+
+    if (interviewFilter) {
+        interviewList = interviewFilter;
+
+    }
+
+
+    let changeStatus = rejectedList.some(item => item.id == idx);
+    if (changeStatus === false) {
+        rejectedList.push(...filtered);
+    }
+    calculateCount();
+    renderRejectData();
+}
+
 
 
 

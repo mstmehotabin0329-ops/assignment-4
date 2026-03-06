@@ -1,6 +1,6 @@
 let cards = [
     {
-        id: 'one',
+        id: "one",
         company: "Google",
         position: "Software Engineer",
         workLocation: "Remote",
@@ -12,7 +12,7 @@ let cards = [
             "Develop scalable applications and cloud-based solutions used by billions of users",
     },
     {
-        id: 'two',
+        id: "two",
         company: "Microsoft",
         position: "Cloud Engineer",
         workLocation: "Hybrid",
@@ -24,7 +24,7 @@ let cards = [
             "Manage and deploy cloud infrastructure solutions using Azure and enterprise technologies.",
     },
     {
-        id: 'three',
+        id: "three",
         company: "Google",
         position: "Data Analyst",
         workLocation: "Onsite",
@@ -36,7 +36,7 @@ let cards = [
             "Analyze large-scale customer data to improve logistics, e-commerce performance, and user experience.",
     },
     {
-        id: 'four',
+        id: "four",
         company: "Meta",
         position: "Frontend Developer",
         workLocation: "Remote",
@@ -48,7 +48,7 @@ let cards = [
             "Build interactive and high-performance UI for social media platforms used globally.",
     },
     {
-        id: 'five',
+        id: "five",
         company: "Tesla",
         position: "Mechanical Engineer",
         workLocation: "Onsite",
@@ -60,7 +60,7 @@ let cards = [
             "Design and improve electric vehicle components and sustainable energy systems.",
     },
     {
-        id: 'six',
+        id: "six",
         company: "Innovation Labs",
         position: "UI/UX Engineer",
         workLocation: "Austin, TX",
@@ -72,7 +72,7 @@ let cards = [
             "Develop scalable applications and cloud-based solutions used by billions of users.",
     },
     {
-        id: 'seven',
+        id: "seven",
         company: "CloudFirst Inc",
         position: "Backend Developer",
         workLocation: "Seattle, WA",
@@ -84,7 +84,7 @@ let cards = [
             "Design and maintain scalable backend systems using Python and AWS. Work with modern DevOps practices and cloud infrastructure.",
     },
     {
-        id: 'eight',
+        id: "eight",
         company: "StartupXYZ",
         position: "Full Stack Engineer",
         workLocation: "Remote",
@@ -101,31 +101,49 @@ let cards = [
 let interviewList = [];
 let rejectedList = [];
 
+
 const allCards = document.getElementById('allCards');
 const totalCount = document.getElementById('total');
 const interviewCount = document.getElementById('interview');
-const rejetedCount = document.getElementById('rejected');
+const rejectedCount = document.getElementById('rejected');
 const availableCount = document.getElementById('availableCount');
 const allFilterBtn = document.getElementById('all-filter-btn');
 const interviewFilterBtn = document.getElementById('interview-filter-btn');
 const rejectedFilterBtn = document.getElementById('rejected-filter-btn');
+const type = document.getElementById('type');
 
 //  calculate  count
 function calculateCount() {
     totalCount.innerText = cards.length;
     interviewCount.innerText = interviewList.length;
     rejectedCount.innerText = rejectedList.length;
-    availableCount.innerText = cards.length;
+
 
 }
-calculateCount();
-
 
 
 
 //  
-function getAllData() {
+function renderAllData() {
     allCards.innerHTML = '';
+
+    allFilterBtn.classList.add('btn-info', 'text-white');
+    interviewFilterBtn.classList.remove('btn-info', 'text-white');
+    rejectedFilterBtn.classList.remove('btn-info', 'text-white');
+
+    if (cards.length < 1) {
+        allCards.innerHTML = `
+        <div id="no-data" class="shadow bg-white rounded-xl mt-10 sm:p-25  p-5 flex flex-col items-center justify-center">
+            <img src="jobs.png" alt="">
+            <h2 class="text-2xl font-semibold text-[#002C5C]">No jobs available</h2>
+            <p class="text-gray-700">Check back soon for new job opportunities</p>
+            
+        </div>
+        
+        `;
+        totalCount.innerText = cards.length;
+        return;
+    }
 
     for (let jobCard of cards) {
         let div = document.createElement('div');
@@ -138,15 +156,15 @@ function getAllData() {
             </div>
             <p class="salary text-[#64748B]"><span>${jobCard.jobCategory}</span> • <span>${jobCard.workLocation}</span> • <span>${jobCard.minSalary}</span> - <span>${jobCard.maxSalary}</span></p>
             <div class="space-y-2">
-                <p class="type bg-gray-200 inline-block py-2 px-4 font-semibold rounded-md">${jobCard.status}</p>
+                <button id="type" class="${jobCard.status === "interview" ? "btn-info" : ""} bg-gray-200  py-2 px-4 font-semibold rounded-md">${jobCard.status}</button>
                 <p class="notes text-[#64748B]">${jobCard.description}</p>
             </div>
             <div class="flex gap-3">
-                <button class="inverviw-btn btn btn-outline btn-success">INTERVIEW</button>
-                <button class="rejected-btn btn btn-outline btn-error">REJECTED</button>
+                <button class="inverviw-btn btn btn-outline btn-success" onclick="callInterviewing('${jobCard.id}')">INTERVIEW</button>
+                <button class="rejected-btn btn btn-outline btn-error" onclick="callRejected('${jobCard.id}')">REJECTED</button>
             </div>
         </div>
-        <div onclick="removeData('${jobCard.id}')" class="mt-5 mr-5">
+        <div onclick="deleteCard('${jobCard.id}')" class="mt-5 mr-5">
             <span class="deleted cursor-pointer text-[#64748B] hover:bg-red-200 border border-gray-300 rounded-full p-2"><i
                     class="fa-regular fa-trash-can"></i></span>
         </div>
@@ -154,15 +172,39 @@ function getAllData() {
         allCards.appendChild(div);
     }
     calculateCount();
+    availableCount.innerText = cards.length;
 
 }
 
 
 
 
-function getInterviewData() {
+
+
+function renderInterviewData() {
     allCards.innerHTML = '';
-    availableCount.innerText = interviewList.length;
+
+    interviewFilterBtn.classList.add('btn-info', 'text-white');
+    allFilterBtn.classList.remove('btn-info', 'text-white');
+    rejectedFilterBtn.classList.remove('btn-info', 'text-white');
+
+
+
+    if (interviewList.length < 1) {
+        allCards.innerHTML = `
+        <div id="no-data" class="shadow bg-white rounded-xl mt-10 sm:p-25  p-5 flex flex-col items-center justify-center">
+            <img src="jobs.png" alt="">
+            <h2 class="text-2xl font-semibold text-[#002C5C]">No jobs available</h2>
+            <p class="text-gray-700">Check back soon for new job opportunities</p>
+            
+        </div>
+        
+        `;
+        interviewCount.innerText = interviewList.length;
+        availableCount.innerText = `${interviewList.length} of ${cards.length}`;
+        return;
+    }
+    availableCount.innerText = `${interviewList.length} of ${cards.length}`;
     for (let jobCard of interviewList) {
         let div = document.createElement('div');
         div.className = 'bg-base-100 shadow rounded-xl p-6 flex justify-between mb-5 mt-8'
@@ -174,28 +216,50 @@ function getInterviewData() {
             </div>
             <p class="salary text-[#64748B]"><span>${jobCard.jobCategory}</span> • <span>${jobCard.workLocation}</span> • <span>${jobCard.minSalary}</span> - <span>${jobCard.maxSalary}</span></p>
             <div class="space-y-2">
-                <p class="type bg-gray-200 inline-block py-2 px-4 font-semibold rounded-md">${jobCard.status}</p>
+                <button id="${jobCard.id}" class="type bg-gray-200 py-2 px-4 font-semibold rounded-md">${jobCard.status}</button>
                 <p class="notes text-[#64748B]">${jobCard.description}</p>
             </div>
             <div class="flex gap-3">
-                <button class="inverviw-btn btn btn-outline btn-success">INTERVIEW</button>
-                <button class="rejected-btn btn btn-outline btn-error">REJECTED</button>
+                <button class="inverviw-btn btn btn-outline btn-success" onclick="callInterviewingForInterviewState('${jobCard.id}')">INTERVIEW</button>
+                <button class="rejected-btn btn btn-outline btn-error" onclick="callRejectedForInterviewState('${jobCard.id}')">REJECTED</button>
             </div>
         </div>
-        <div onclick="removeData('${jobCard.id}')" class="mt-5 mr-5">
+        <div onclick="deleteCardForInterview('${jobCard.id}')" class="mt-5 mr-5">
             <span class="deleted cursor-pointer text-[#64748B] hover:bg-red-200 border border-gray-300 rounded-full p-2"><i
                     class="fa-regular fa-trash-can"></i></span>
         </div>
         `
         allCards.appendChild(div);
     }
-    calculateCount();
+
 }
 
 
-function getRejectedData() {
+function renderRejectedData() {
     allCards.innerHTML = '';
-    availableCount.innerText = rejectedList.length;
+
+    rejectedFilterBtn.classList.add('btn-info', 'text-white');
+    interviewFilterBtn.classList.remove('btn-info', 'text-white');
+    allFilterBtn.classList.remove('btn-info', 'text-white');
+
+
+
+    if (rejectedList.length < 1) {
+        allCards.innerHTML = `
+        <div id="no-data" class="shadow bg-white rounded-xl mt-10 sm:p-25  p-5 flex flex-col items-center justify-center">
+            <img src="jobs.png" alt="">
+            <h2 class="text-2xl font-semibold text-[#002C5C]">No jobs available</h2>
+            <p class="text-gray-700">Check back soon for new job opportunities</p>
+            
+        </div>
+        
+        `;
+        rejectedCount.innerText = rejectedList.length;
+        availableCount.innerText = `${rejectedList.length} of ${cards.length}`;
+        return;
+    }
+
+    availableCount.innerText = `${rejectedList.length} of ${cards.length}`;
     for (let jobCard of rejectedList) {
         let div = document.createElement('div');
         div.className = 'bg-base-100 shadow rounded-xl p-6 flex justify-between mb-5 mt-8'
@@ -207,22 +271,23 @@ function getRejectedData() {
             </div>
             <p class="salary text-[#64748B]"><span>${jobCard.jobCategory}</span> • <span>${jobCard.workLocation}</span> • <span>${jobCard.minSalary}</span> - <span>${jobCard.maxSalary}</span></p>
             <div class="space-y-2">
-                <p class="type bg-gray-200 inline-block py-2 px-4 font-semibold rounded-md">${jobCard.status}</p>
+                <button id="${jobCard.id}" class="type bg-gray-200 py-2 px-4 font-semibold rounded-md">${jobCard.status}</button>
                 <p class="notes text-[#64748B]">${jobCard.description}</p>
             </div>
             <div class="flex gap-3">
-                <button class="inverviw-btn btn btn-outline btn-success">INTERVIEW</button>
-                <button class="rejected-btn btn btn-outline btn-error">REJECTED</button>
+                <button class="inverviw-btn btn btn-outline btn-success " onclick="callInterviewingForRejectedState('${jobCard.id}')">INTERVIEW</button>
+                <button class="rejected-btn btn btn-outline btn-error" onclick="callRejectedForRejectedState('${jobCard.id}')">REJECTED</button>
             </div>
         </div>
-        <div onclick="removeData('${jobCard.id}')" class="mt-5 mr-5">
+        <div onclick="deleteCardForRejected('${jobCard.id}')" class="mt-5 mr-5">
             <span class="deleted cursor-pointer text-[#64748B] hover:bg-red-200 border border-gray-300 rounded-full p-2"><i
                     class="fa-regular fa-trash-can"></i></span>
         </div>
         `
         allCards.appendChild(div);
     }
-    calculateCount();
+
 }
 
-// getAllData();
+renderAllData();
+

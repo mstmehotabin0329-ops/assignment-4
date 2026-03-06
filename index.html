@@ -20,6 +20,11 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <title>PH Job Tracker</title>
+    <style>
+    *{
+    font-family: "Geist", sans-serif;
+    }
+    </style>
 
 </head>
 
@@ -58,18 +63,17 @@
 
         <!-- main button -->
         <div class="flex gap-4">
-            <button onclick="getAllData()" id="all-filter-btn"
-                class="btn btn-info px-8 text-white">All</button>
-            <button onclick="getInterviewData()" id="interview-filter-btn"
-                class="btn text-[#444a52]">Inverview</button>
-            <button onclick="getRejectedData()" id="rejected-filter-btn"
-                class="btn text-[#444a52]">Rejected</button>
+            <button onclick="renderAllData()" id="all-filter-btn" class="btn text-[#444a52] px-8">All</button>
+            <button id="interview-filter-btn"
+                class="btn text-[#444a52]" onclick="renderInterviewData()" >Inverview</button>
+            <button onclick="renderRejectedData()" id="rejected-filter-btn" class="btn text-[#444a52]">Rejected</button>
         </div>
 
         <div class="allCards" id="allCards">
-           
+
 
         </div>
+
     </main>
     <script src="js/script.js"></script>
 </body>

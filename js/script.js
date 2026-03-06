@@ -321,7 +321,56 @@ function callRejectedForRejectedState(idx) {
 
 
 
+// delete items
 
+function deleteCard(idx) {
+    let modifyAll = cards.filter(item => item.id !== idx);
+    let modifyInterview = interviewList.filter(item => item.id !== idx);
+    let modifyRejected = rejectedList.filter(item => item.id !== idx);
+
+    cards = modifyAll;
+    interviewList = modifyInterview;
+    rejectedList = modifyRejected;
+
+    calculateCount();
+    availableCount.innerText = cards.length;
+    renderAllData();
+}
+
+function deleteCardForInterview(idx) {
+    modifyAll = cards.filter(item => item.id !== idx);
+    modifyInterview = interviewList.filter(item => item.id !== idx);
+    modifyRejected = rejectedList.filter(item => item.id !== idx);
+
+    cards = modifyAll;
+    if (modifyInterview && modifyRejected) {
+        interviewList = modifyInterview;
+        rejectedList = modifyRejected;
+    }
+
+
+    renderInterviewData();
+    calculateCount();
+    availableCount.innerText = `${interviewList.length} of ${cards.length}`;
+
+}
+function deleteCardForRejected(idx) {
+    modifyAll = cards.filter(item => item.id !== idx);
+    modifyInterview = interviewList.filter(item => item.id !== idx);
+    modifyRejected = rejectedList.filter(item => item.id !== idx);
+
+    cards = modifyAll;
+    if (modifyInterview && modifyRejected) {
+        interviewList = modifyInterview;
+        rejectedList = modifyRejected;
+    }
+
+
+    renderRejectedData();
+    calculateCount();
+    availableCount.innerText = `${rejectedList.length} of ${cards.length}`;
+
+}
 
 
 
